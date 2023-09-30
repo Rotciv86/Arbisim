@@ -1,0 +1,23 @@
+{
+  "name": "scrapeuniswap",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@uniswap/sdk": "^3.0.3",
+    "@uniswap/sdk-core": "^4.0.7",
+    "@uniswap/v3-core": "^1.0.1",
+    "@uniswap/v3-periphery": "^1.4.3",
+    "axios": "^1.5.0",
+    "cheerio": "^1.0.0-rc.12",
+    "ethers": "^6.7.1",
+    "googleapis": "^121.0.0",
+    "puppeteer": "^21.2.1"
+  }
+}
