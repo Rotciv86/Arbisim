@@ -2,6 +2,13 @@ import scrapeSushi from './scrape/scrapeSushi.js';
 import scrapeUniSwap from './scrape/scrapeUniSwap.js';
 import { google } from "googleapis";
 import scrapeKyber from './scrape/scrapeKyber.js';
+import puppeteer from 'puppeteer';
+
+await puppeteer.launch({
+  userDataDir: './puppeteer-cache', // Ruta a tu carpeta de caché
+  // Otras configuraciones...
+});
+
 
 
 setInterval( async () => {
