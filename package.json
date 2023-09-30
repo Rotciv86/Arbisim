@@ -19,5 +19,8 @@
     "ethers": "^6.7.1",
     "googleapis": "^121.0.0",
     "puppeteer": "^21.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 }
