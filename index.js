@@ -5,7 +5,7 @@ import scrapeKyber from './scrape/scrapeKyber.js';
 import puppeteer from 'puppeteer';
 
 await puppeteer.launch({
-  userDataDir: './puppeteer-cache', // Ruta a tu carpeta de caché
+  userDataDir: './puppeter-cache', // Ruta a tu carpeta de caché
   // Otras configuraciones...
 });
 
