@@ -58,7 +58,7 @@ const scrapeUniSwap = async () => {
 
     for (const button of buttons) {
       const buttonText = await page.evaluate(el => el.innerText, button);
-      if (buttonText.includes('Entiendo')) {
+      if (buttonText.includes('Entiendo')|| buttonText.includes('I understand')) {
         entendidoButton = button;
         break;  // Rompemos el bucle si encontramos el botón con la palabra "Entiendo"
       }
