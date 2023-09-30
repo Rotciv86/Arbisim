@@ -4,11 +4,17 @@
   "description": "",
   "main": "index.js",
   "type": "module",
+
+  "engines": {
+    "node": "20.0.0"
+  },
+  
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:dev": "nodemon . -q"
-
   },
+
+  
   "author": "",
   "license": "ISC",
   "dependencies": {
