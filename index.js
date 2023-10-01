@@ -3,9 +3,11 @@ import scrapeUniSwap from './scrape/scrapeUniSwap.js';
 import { google } from "googleapis";
 import scrapeKyber from './scrape/scrapeKyber.js';
 import puppeteer from 'puppeteer';
+import 'dotenv/config';
 
 await puppeteer.launch({
-  userDataDir: './puppeter-cache', // Ruta a tu carpeta de caché
+  args:["--disable-setuid-sandbox","--no-sandbox","--single-process","--no-zygote",],
+  executablePath: process.env.NODE_ENV === 'production' ? process.env.PUPPETEER_EXECUTABLE_PATH : puppeteer.executablePath(), // Ruta a tu carpeta de caché
   // Otras configuraciones...
 });
 
