@@ -1,60 +1,43 @@
-import puppeteer from 'puppeteer';
+import { launchPuppeteer } from "../utils/puppeteerUtils.js";
 
-const scrapeKyber = async ()  => {
-  const browser = await puppeteer.launch({headless: false, slowMo: 25 });
+
+const scrapeKyber = async (browser) => {
   const page = await browser.newPage();
 
   try {
-
-    // await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36');
     let secondElement;
 
     await page.goto('https://kyberswap.com/swap/ethereum/eth-to-usdc');
+    
+    // Espera a que la página esté completamente cargada
+    await page.waitForSelector('body', { timeout: 120000 });
+    
+    await new Promise(resolve => setTimeout(resolve, 2000));
 
-
-   
-    // await page.waitForSelector('amount-input.token-amount-input', { timeout: 120000 });
-
-    const elements = await page.$$('input.token-amount-input');
-
-    if (elements.length >= 2) {
-      secondElement = elements[1];
+    // Busca el segundo elemento
+    secondElement = await page.$$('input.token-amount-input');
+    
+    if (secondElement.length >= 2) {
       // Realiza acciones en el segundo elemento encontrado
+      const inputValue = await page.evaluate(el => el.value, secondElement[1]);
+      
+      let buyPriceEthKyber;
+      if (inputValue) {
+        buyPriceEthKyber = parseFloat(inputValue);
+      }
+
+      console.log('Valor en USDC en KYBERSWAP:', buyPriceEthKyber);
+      return { buyPriceEthKyber };
     } else {
       console.log('No se encontraron suficientes elementos.');
+      return { buyPriceEthKyber: null };
     }
-
-    
-    const inputValue = await page.evaluate(el => el.getAttribute('value'), secondElement);
-
-    let buyPriceEthKyber;
-    // Asegúrate de que inputValue no sea null o undefined antes de convertirlo a un número
-    if (inputValue) {
-    buyPriceEthKyber = parseFloat(inputValue);
-    }
-
-
-    
-
-    await new Promise(resolve => setTimeout(resolve,3000));
-
-
- 
-    
-    
-    console.log('Valor en USDC en KYBERSWAP:', buyPriceEthKyber);
-      
-    
-
-    return {buyPriceEthKyber}
   } catch (error) {
     console.error('Ocurrió un error:', error);
-    return { buyPriceEthKyber: null }; // Return null if an error occurs
-
+    return { buyPriceEthKyber: null };
   } finally {
-    await browser.close();
+    await page.close();
   }
 };
-
 
 export default scrapeKyber;

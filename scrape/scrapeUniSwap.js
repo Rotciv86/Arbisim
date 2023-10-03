@@ -1,7 +1,6 @@
-import puppeteer from 'puppeteer';
+import { launchPuppeteer } from '../utils/puppeteerUtils.js';
 
-const scrapeUniSwap = async () => {
-  const browser = await puppeteer.launch({headless: false, slowMo: 25 });
+const scrapeUniSwap = async (browser) => {
   const page = await browser.newPage();
 
   try {
@@ -103,7 +102,7 @@ const scrapeUniSwap = async () => {
     console.error('Ocurrió un error:', error);
     return { buyPriceEthUni: null }; // Return null if an error occurs
   } finally {
-    await browser.close();
+    await page.close();
   }
 };
 
