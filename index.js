@@ -5,11 +5,6 @@ import scrapeKyber from './scrape/scrapeKyber.js';
 import puppeteer from 'puppeteer';
 import 'dotenv/config';
 
-await puppeteer.launch({
-  args:["--disable-setuid-sandbox","--no-sandbox","--single-process","--no-zygote",],
-  executablePath: process.env.NODE_ENV === 'production' ? process.env.PUPPETEER_EXECUTABLE_PATH : puppeteer.executablePath(), // Ruta a tu carpeta de caché
-  // Otras configuraciones...
-});
 
 
 
@@ -82,7 +77,7 @@ console.log("Nueva fila agregada a Arbisim.");
   console.log("No ha existido la diferencia suficiente para arbitrar")
 }
 
-}, 120000);
+}, 60000);
 
 // scrapeUniSwap();
 // scrapeShushi();

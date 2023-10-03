@@ -1,7 +1,7 @@
-import puppeteer from 'puppeteer';
+import { launchPuppeteer } from '../utils/puppeteerUtils.js';
 
 const scrapeSushi = async ()  => {
-  const browser = await puppeteer.launch({headless: false, slowMo: 25 });
+  const browser = await launchPuppeteer();
   const page = await browser.newPage();
 
   try {
