@@ -75,11 +75,11 @@ try{
     })
 
 
-    console.log("Nueva fila agregada a Arbisim.");
+    console.log(`${formattedDate} Nueva fila agregada a Arbisim.`);
 
   } else {
 
-    console.log("No ha existido la diferencia suficiente para arbitrar")
+    console.log(`${formattedDate} No ha existido la diferencia suficiente para arbitrar`)
   }
 
 } catch (error) {
