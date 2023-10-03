@@ -2,6 +2,7 @@ import { launchPuppeteer } from '../utils/puppeteerUtils.js';
 
 const scrapeSushi = async (browser)  => {
   const page = await browser.newPage();
+  
 
   try {
     await page.goto('https://www.sushi.com/swap');
@@ -29,7 +30,7 @@ const scrapeSushi = async (browser)  => {
     
     
     
-    await page.waitForSelector('input[placeholder="Search by token or address"]');
+    await page.waitForSelector('input[placeholder="Search by token or address"]', { timeout: 60000});
     await page.type('input[placeholder="Search by token or address"]', 'USDC');
     
     await new Promise(resolve => setTimeout(resolve,3000));
