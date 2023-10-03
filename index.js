@@ -60,8 +60,9 @@ try{
 
   // Verifica si la diferencia entre el máximo y el mínimo es al menos 10
   const isDifferenceGreaterThan10 = maxPrice - minPrice >= 10;
+  const isMinPriceRight = minPrice > 0;
 
-  if(isDifferenceGreaterThan10){
+  if(isDifferenceGreaterThan10 && isMinPriceRight){
   // Agrega la nueva fila a la Hoja 2
     const resource = {
     values: [updatedRow],
