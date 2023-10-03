@@ -1,5 +1,7 @@
 // puppeteerUtils.js
 import puppeteer from 'puppeteer';
+import 'dotenv/config';
+
 
 export const launchPuppeteer = async () => {
   const browser = await puppeteer.launch({
