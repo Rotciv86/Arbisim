@@ -1,7 +1,6 @@
 import { launchPuppeteer } from '../utils/puppeteerUtils.js';
 
-const scrapeSushi = async ()  => {
-  const browser = await launchPuppeteer();
+const scrapeSushi = async (browser)  => {
   const page = await browser.newPage();
 
   try {
@@ -105,7 +104,7 @@ const scrapeSushi = async ()  => {
     return { buyPriceEthSushi: null }; // Return null if an error occurs
 
   } finally {
-    await browser.close();
+    await page.close();
   }
 };
 

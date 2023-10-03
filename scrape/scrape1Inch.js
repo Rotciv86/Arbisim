@@ -1,7 +1,6 @@
 import puppeteer from 'puppeteer';
 
-const scrape1Inch = async ()  => {
-  const browser = await puppeteer.launch({headless: false, slowMo: 25 });
+const scrape1Inch = async (browser)  => {
   const page = await browser.newPage();
 
   try {
@@ -46,7 +45,7 @@ const scrape1Inch = async ()  => {
     return { buyPriceEth1Inch: null }; // Return null if an error occurs
 
   } finally {
-    await browser.close();
+    await page.close();
   }
 };
 

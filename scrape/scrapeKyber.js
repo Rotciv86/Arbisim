@@ -1,8 +1,7 @@
 import { launchPuppeteer } from "../utils/puppeteerUtils.js";
 
 
-const scrapeKyber = async () => {
-  const browser = await launchPuppeteer();
+const scrapeKyber = async (browser) => {
   const page = await browser.newPage();
 
   try {
@@ -37,7 +36,7 @@ const scrapeKyber = async () => {
     console.error('Ocurrió un error:', error);
     return { buyPriceEthKyber: null };
   } finally {
-    await browser.close();
+    await page.close();
   }
 };
 

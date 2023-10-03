@@ -4,6 +4,7 @@ import { google } from "googleapis";
 import scrapeKyber from './scrape/scrapeKyber.js';
 import puppeteer from 'puppeteer';
 import 'dotenv/config';
+import { launchPuppeteer } from './utils/puppeteerUtils.js';
 
 
 
@@ -31,50 +32,60 @@ const values = response.data.values || [];
 const lastRow = values[values.length - 1]; // Última fila de datos
 console.log(lastRow)
 
-const scrapedDataSushiSwap = await scrapeSushi();
-const {buyPriceEthSushi} = scrapedDataSushiSwap;
+const browser = await launchPuppeteer();
 
-await new Promise(resolve => setTimeout(resolve, 3000));
+try{
 
+  const scrapedDataSushiSwap = await scrapeSushi(browser);
+  const {buyPriceEthSushi} = scrapedDataSushiSwap;
 
-const scrapedDataUniSwap = await scrapeUniSwap();
-const {buyPriceEthUni} = scrapedDataUniSwap;
-
-const scrapedDataKyberSwap = await scrapeKyber();
-const {buyPriceEthKyber} = scrapedDataKyberSwap;
+  await new Promise(resolve => setTimeout(resolve, 3000));
 
 
-const dateOptions = { timeZone: 'Europe/Madrid' };
-const formattedDate = new Date().toLocaleString('es-ES', dateOptions);
+  const scrapedDataUniSwap = await scrapeUniSwap(browser);
+  const {buyPriceEthUni} = scrapedDataUniSwap;
 
-// Si la variación es mayor o igual a 1.0 (ajusta según tus necesidades)
-const updatedRow = [formattedDate, buyPriceEthUni, buyPriceEthSushi, buyPriceEthKyber];
-
-const maxPrice = Math.max(...updatedRow.slice(1));
-const minPrice = Math.min(...updatedRow.slice(1));
-
-// Verifica si la diferencia entre el máximo y el mínimo es al menos 10
-const isDifferenceGreaterThan10 = maxPrice - minPrice >= 10;
-
-if(isDifferenceGreaterThan10){
-// Agrega la nueva fila a la Hoja 2
-const resource = {
-values: [updatedRow],
-};
-
-await googleSheets.spreadsheets.values.append({
-spreadsheetId,
-range,
-valueInputOption: "USER_ENTERED",
-resource,
-})
+  const scrapedDataKyberSwap = await scrapeKyber(browser);
+  const {buyPriceEthKyber} = scrapedDataKyberSwap;
 
 
-console.log("Nueva fila agregada a Arbisim.");
+  const dateOptions = { timeZone: 'Europe/Madrid' };
+  const formattedDate = new Date().toLocaleString('es-ES', dateOptions);
 
-} else {
+  // Si la variación es mayor o igual a 1.0 (ajusta según tus necesidades)
+  const updatedRow = [formattedDate, buyPriceEthUni, buyPriceEthSushi, buyPriceEthKyber];
 
-  console.log("No ha existido la diferencia suficiente para arbitrar")
+  const maxPrice = Math.max(...updatedRow.slice(1));
+  const minPrice = Math.min(...updatedRow.slice(1));
+
+  // Verifica si la diferencia entre el máximo y el mínimo es al menos 10
+  const isDifferenceGreaterThan10 = maxPrice - minPrice >= 10;
+
+  if(isDifferenceGreaterThan10){
+  // Agrega la nueva fila a la Hoja 2
+    const resource = {
+    values: [updatedRow],
+    };
+
+    await googleSheets.spreadsheets.values.append({
+    spreadsheetId,
+    range,
+    valueInputOption: "USER_ENTERED",
+    resource,
+    })
+
+
+    console.log("Nueva fila agregada a Arbisim.");
+
+  } else {
+
+    console.log("No ha existido la diferencia suficiente para arbitrar")
+  }
+
+} catch (error) {
+  console.error('Error en la ejecución de los scrapers:', error);
+} finally {
+  await browser.close();
 }
 
 }, 60000);
