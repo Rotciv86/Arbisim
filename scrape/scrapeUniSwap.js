@@ -10,7 +10,6 @@ const scrapeUniSwap = async (browser) => {
     const inputValue = await page.$('input#swap-currency-input');
     await page.type('input#swap-currency-input', '1');
 
-    const inputValueHTML = await page.evaluate(el => el.outerHTML, inputValue);
     // console.log('HTML del elemento específico:', inputValueHTML);
     
     // Click the currency select button

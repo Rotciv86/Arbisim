@@ -36,17 +36,16 @@ const browser = await launchPuppeteer();
 
 try{
 
-  const scrapedDataSushiSwap = await scrapeSushi(browser);
-  const {buyPriceEthSushi} = scrapedDataSushiSwap;
+  const [scrapedDataSushiSwap, scrapedDataUniSwap, scrapedDataKyberSwap] = await Promise.all([
+    scrapeSushi(browser),
+    scrapeUniSwap(browser),
+    scrapeKyber(browser)
+  ]);
 
-  await new Promise(resolve => setTimeout(resolve, 3000));
+  const { buyPriceEthSushi } = scrapedDataSushiSwap;
+  const { buyPriceEthUni } = scrapedDataUniSwap;
+  const { buyPriceEthKyber } = scrapedDataKyberSwap;
 
-
-  const scrapedDataUniSwap = await scrapeUniSwap(browser);
-  const {buyPriceEthUni} = scrapedDataUniSwap;
-
-  const scrapedDataKyberSwap = await scrapeKyber(browser);
-  const {buyPriceEthKyber} = scrapedDataKyberSwap;
 
 
   const dateOptions = { timeZone: 'Europe/Madrid' };
