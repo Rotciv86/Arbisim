@@ -85,7 +85,7 @@ const scrapeUniSwap = async (browser) => {
     await new Promise(resolve => setTimeout(resolve, 3000));
 
     // Obtener el valor del output como texto usando la clase específica
-    const outputValueText = await page.$eval('input#swap-currency-output.NumericalInput__StyledInput-sc-43ed157c-0', (element) => element.value);
+    const outputValueText = await page.$eval('input#swap-currency-output', (element) => element.value);
     
     // Intentar convertir el valor a un número
     const buyPriceEthUni = parseFloat(outputValueText);
