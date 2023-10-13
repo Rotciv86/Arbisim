@@ -88,7 +88,7 @@ try{
   await browser.close();
 }
 
-}, 120000);
+}, 180000);
 
 // scrapeUniSwap();
 // scrapeShushi();
