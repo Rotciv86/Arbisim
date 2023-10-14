@@ -7,7 +7,7 @@ const scrapeSushi = async (browser)  => {
 
   try {
     await page.goto('https://www.sushi.com/swap');
-    await page.waitForSelector('input[testdata-id="swap-from-input"]');
+    await page.waitForSelector('input[testdata-id="swap-from-input"]', { timeout: 60000 });
     const inputValue = await page.$('input[testdata-id="swap-from-input"]');
     await page.type('input[testdata-id="swap-from-input"]', '1');
 
