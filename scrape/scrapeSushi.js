@@ -8,18 +8,18 @@ const scrapeSushi = async (browser)  => {
   try {
     await page.goto('https://www.sushi.com/swap');
 
-      // Función para esperar el selector o refrescar y volver a intentar
-      const waitForSelectorOrRefresh = async () => {
-        try {
-          await page.waitForSelector('input[testdata-id="swap-from-input"]', { timeout: 60000 });
-        } catch (error) {
-          console.error('Error al esperar el selector. Intentando refrescar la página.');
-          await page.reload(); // Refresca la página
-          await waitForSelectorOrRefresh(); // Vuelve a intentar esperar el selector
-        }
-      };
+      // // Función para esperar el selector o refrescar y volver a intentar
+      // const waitForSelectorOrRefresh = async () => {
+      //   try {
+      //     await page.waitForSelector('input[testdata-id="swap-from-input"]', { timeout: 60000 });
+      //   } catch (error) {
+      //     console.error('Error al esperar el selector. Intentando refrescar la página.');
+      //     await page.reload(); // Refresca la página
+      //     await waitForSelectorOrRefresh(); // Vuelve a intentar esperar el selector
+      //   }
+      // };
 
-      await waitForSelectorOrRefresh(); // Llama a la función 
+      // await waitForSelectorOrRefresh(); // Llama a la función 
 
     const inputValue = await page.$('input[testdata-id="swap-from-input"]');
     await page.type('input[testdata-id="swap-from-input"]', '1');
@@ -32,6 +32,8 @@ const scrapeSushi = async (browser)  => {
 
 
     // Click the currency select button
+    await page.waitForSelector('button[testdata-id="swap-to-button"]', { visible: true, timeout: 60000});
+
     const buttonSelector = 'button[testdata-id="swap-to-button"]';
     const buttonsa = await page.$$(buttonSelector);
     
