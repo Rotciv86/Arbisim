@@ -105,7 +105,7 @@ setInterval( async () => {
   }
 }
 
-}, 120000);
+}, 300000);
 
 // scrapeUniSwap();
 // scrapeShushi();
