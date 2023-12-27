@@ -31,7 +31,7 @@ const scrapeUniSwap = async (browser) => {
       // Si se encontró el elemento, haz lo que necesites con él
       await specificElement[0].click();
     } else {
-      console.log('No se encontró ningún elemento con el título "USDCoin".');
+      console.log('UNI: No se encontró ningún elemento con el título "USDCoin".');
     }
     
 
@@ -99,7 +99,7 @@ const scrapeUniSwap = async (browser) => {
     return {buyPriceEthUni};
     
   } catch (error) {
-    console.error('Ocurrió un error:', error);
+    console.error('UNI: Ocurrió un error:', error);
     return { buyPriceEthUni: null }; // Return null if an error occurs
   } finally {
     await page.close();

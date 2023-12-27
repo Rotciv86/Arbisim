@@ -34,7 +34,7 @@ const scrapeKyber = async (browser) => {
       return { buyPriceEthKyber: null };
     }
   } catch (error) {
-    console.error('Ocurrió un error:', error);
+    console.error('Ocurrió un error en KYBERSWAP:', error);
     return { buyPriceEthKyber: null };
   } finally {
     await page.close();
