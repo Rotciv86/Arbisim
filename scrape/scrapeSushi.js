@@ -2,7 +2,7 @@ import { launchPuppeteer } from '../utils/puppeteerUtils.js';
 
 const scrapeSushi = async (browser)  => {
   const page = await browser.newPage();
-  await page.setDefaultNavigationTimeout(120000);
+  await page.setDefaultNavigationTimeout(60000);
   
 
   try {
@@ -24,7 +24,7 @@ const scrapeSushi = async (browser)  => {
     const inputValue = await page.$('input[testdata-id="swap-from-input"]');
     await page.type('input[testdata-id="swap-from-input"]', '1');
 
-    const inputValueHTML = await page.evaluate(el => el.outerHTML, inputValue);
+    // const inputValueHTML = await page.evaluate(el => el.outerHTML, inputValue);
     // console.log('HTML del elemento específico:', inputValueHTML);
     
 
@@ -41,7 +41,7 @@ const scrapeSushi = async (browser)  => {
       // Selecciona el segundo botón encontrado
       await buttonsa[0].click();
     } else {
-      console.log('No se encontraron suficientes botones con el testdata-id "swap-to-button".');
+      console.log('SUSHI: No se encontraron suficientes botones con el testdata-id "swap-to-button".');
     }
     
     
@@ -60,7 +60,7 @@ const scrapeSushi = async (browser)  => {
       // Si se encontró el elemento, haz lo que necesites con él
       await specificElement[0].click();
     } else {
-      console.log('No se encontró ningún elemento con el título "USDC".');
+      console.log('SUSHI: No se encontró ningún elemento con el título "USDC".');
     }
     
 
@@ -89,11 +89,11 @@ const scrapeSushi = async (browser)  => {
     }
 
 
-    const elementHTML = await page.evaluate(el => el.outerHTML, specificElement[0]);
+    // const elementHTML = await page.evaluate(el => el.outerHTML, specificElement[0]);
     // console.log('HTML del elemento específico:', elementHTML);
 
 
-    const htmlOfSpecificElement = await page.evaluate(element => element.outerHTML, specificElement[0]);
+    // const htmlOfSpecificElement = await page.evaluate(element => element.outerHTML, specificElement[0]);
     // console.log('HTML del elemento específico:', htmlOfSpecificElement);
 
     // Esperar 10 segundos para comprobar el valor de output
@@ -117,11 +117,16 @@ const scrapeSushi = async (browser)  => {
 
     return {buyPriceEthSushi}
   } catch (error) {
-    console.error('Ocurrió un error:', error);
+    console.error('SUSHI: Ocurrió un error:', error);
     return { buyPriceEthSushi: null }; // Return null if an error occurs
 
   } finally {
+
+    if (browser){
+
     await page.close();
+
+    }
   }
 };
 
