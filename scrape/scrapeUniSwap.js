@@ -2,11 +2,11 @@ import { launchPuppeteer } from '../utils/puppeteerUtils.js';
 
 const scrapeUniSwap = async (browser) => {
   const page = await browser.newPage();
-  await page.setDefaultNavigationTimeout(120000);
+  await page.setDefaultNavigationTimeout(300000);
 
   try {
     await page.goto('https://app.uniswap.org/swap');
-    await page.waitForSelector('input#swap-currency-input');
+    await page.waitForSelector('input#swap-currency-input', { timeout: 60000 });
     const inputValue = await page.$('input#swap-currency-input');
     await page.type('input#swap-currency-input', '1');
 
