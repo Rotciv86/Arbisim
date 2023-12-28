@@ -11,7 +11,7 @@ const scrapeKyber = async (browser) => {
     await page.goto('https://kyberswap.com/swap/ethereum/eth-to-usdc');
     
     // Espera a que la página esté completamente cargada
-    await page.waitForSelector('body', { timeout: 120000 });
+    await page.waitForSelector('body', { timeout: 300000 });
     
     await new Promise(resolve => setTimeout(resolve, 2000));
 

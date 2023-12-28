@@ -21,7 +21,7 @@ const scrapeSushi = async (browser)  => {
 
       // await waitForSelectorOrRefresh(); // Llama a la función 
 
-    const inputValue = await page.$('input[testdata-id="swap-from-input"]');
+    await page.waitForSelector('input[testdata-id="swap-from-input"]', { timeout: 120000 });
     await page.type('input[testdata-id="swap-from-input"]', '1');
 
     // const inputValueHTML = await page.evaluate(el => el.outerHTML, inputValue);
