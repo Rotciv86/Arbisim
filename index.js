@@ -2,9 +2,26 @@ import scrapeSushi from './scrape/scrapeSushi.js';
 import scrapeUniSwap from './scrape/scrapeUniSwap.js';
 import { google } from "googleapis";
 import scrapeKyber from './scrape/scrapeKyber.js';
-import puppeteer from 'puppeteer';
-import 'dotenv/config';
 import { launchPuppeteer } from './utils/puppeteerUtils.js';
+import express from 'express';
+import axios from 'axios';
+
+
+const app = express();
+
+app.get('/', (req,res) => {
+  res.send('Arbisim en funcionando');
+});
+
+app.get('/ping', (req, res) => {
+  res.status(200).send('Ping OK');
+});
+
+const port = 3000;
+
+app.listen( port , () => {
+  console.log(`La aplicación está escuchando en el puerto ${port}`);
+});
 
 
 let isProcessing = false;
@@ -106,6 +123,26 @@ setInterval( async () => {
 }
 
 }, 300000);
+
+
+const pingInterval = 6 * 60 * 1000; // Intervalo de ping en milisegundos (5 minutos)
+
+// Realizar un ping interno cada cierto intervalo
+setInterval(async () => {
+  try {
+    // Realiza una solicitud de ping interno a tu propia aplicación
+    const response = await axios.get('https://arbisim.onrender.com/ping'); // Ajusta la URL según tu configuración
+    if (response.status === 200 && response.data === 'Ping OK') {
+      console.log('Ping interno exitoso. La aplicación está activa.');
+    } else {
+      console.error('Error en el ping interno. La aplicación puede estar inactiva.');
+      // Toma medidas para reiniciar la aplicación o notificar si algo sale mal
+    }
+  } catch (error) {
+    console.error('Error en el ping interno:', error.message);
+    // Maneja cualquier error que pueda ocurrir durante el ping
+  }
+}, pingInterval);
 
 // scrapeUniSwap();
 // scrapeShushi();
