@@ -6,7 +6,7 @@ const scrapeUniSwap = async (browser) => {
 
   try {
     await page.goto('https://app.uniswap.org/swap');
-    await page.waitForSelector('input#swap-currency-input', { timeout: 120000 });
+    await page.waitForSelector('input#swap-currency-input', { timeout: 300000 });
     const inputValue = await page.$('input#swap-currency-input');
     await page.type('input#swap-currency-input', '1');
 
