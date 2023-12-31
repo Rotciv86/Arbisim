@@ -2,11 +2,10 @@ import { launchPuppeteer } from '../utils/puppeteerUtils.js';
 
 const scrapeSushi = async (browser)  => {
   const page = await browser.newPage();
-  await page.setDefaultNavigationTimeout(300000);
   
 
   try {
-    await page.goto('https://www.sushi.com/swap');
+    await page.goto('https://www.sushi.com/swap', {timeout: 300000});
 
       // // Función para esperar el selector o refrescar y volver a intentar
       // const waitForSelectorOrRefresh = async () => {

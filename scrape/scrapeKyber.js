@@ -3,12 +3,11 @@ import { launchPuppeteer } from "../utils/puppeteerUtils.js";
 
 const scrapeKyber = async (browser) => {
   const page = await browser.newPage();
-  await page.setDefaultNavigationTimeout(300000);
 
   try {
     let secondElement;
 
-    await page.goto('https://kyberswap.com/swap/ethereum/eth-to-usdc');
+    await page.goto('https://kyberswap.com/swap/ethereum/eth-to-usdc', {timeout: 300000});
     
     // Espera a que la página esté completamente cargada
     await page.waitForSelector('body', { timeout: 300000 });
