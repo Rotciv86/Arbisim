@@ -8,7 +8,7 @@ export const launchPuppeteer = async () => {
     args: ["--disable-setuid-sandbox", "--no-sandbox", "--single-process", "--no-zygote"],
     executablePath: process.env.NODE_ENV === 'production' ? process.env.PUPPETEER_EXECUTABLE_PATH : puppeteer.executablePath(),
     headless: "true",
-    timeout: 300000// Otras configuraciones...
+    timeout: 600000// Otras configuraciones...
   });
 
   return browser;
