@@ -125,24 +125,43 @@ setInterval( async () => {
 }, 300000);
 
 
-const pingInterval = 6 * 60 * 1000; // Intervalo de ping en milisegundos (5 minutos)
+const pingInterval = 13 * 60 * 1000; // Intervalo de ping en milisegundos (6 minutos)
+let retryCount = 0;
+const maxRetries = 3; // Número máximo de reintentos permitidos
 
 // Realizar un ping interno cada cierto intervalo
-setInterval(async () => {
+setInterval(() => {
+  performPing();
+}, pingInterval);
+
+function handlePingFailure(errorMessage) {
+  console.error('Error en el ping interno:', errorMessage);
+
+  if (retryCount < maxRetries) {
+    retryCount++;
+    console.log(`Reintentando ping (Intento ${retryCount})...`);
+    // Puedes agregar un pequeño retraso antes de reintentar si es necesario
+  } else {
+    // Alcanzó el número máximo de reintentos, toma medidas adicionales si es necesario
+    console.error('Se alcanzó el número máximo de reintentos. Tomando medidas adicionales...');
+    // Puedes implementar acciones como reiniciar la aplicación o notificar.
+  }
+}
+
+async function performPing() {
   try {
-    // Realiza una solicitud de ping interno a tu propia aplicación
-    const response = await axios.get('https://arbisim.onrender.com/ping'); // Ajusta la URL según tu configuración
+    const response = await axios.get('https://arbisim.onrender.com/ping');
     if (response.status === 200 && response.data === 'Ping OK') {
       console.log('Ping interno exitoso. La aplicación está activa.');
+      // Reinicia el contador de reintentos después de un ping exitoso
+      retryCount = 0;
     } else {
-      console.error('Error en el ping interno. La aplicación puede estar inactiva.');
-      // Toma medidas para reiniciar la aplicación o notificar si algo sale mal
+      handlePingFailure('La aplicación puede estar inactiva.');
     }
   } catch (error) {
-    console.error('Error en el ping interno:', error.message);
-    // Maneja cualquier error que pueda ocurrir durante el ping
+    handlePingFailure(error.message);
   }
-}, pingInterval);
+}
 
 // scrapeUniSwap();
 // scrapeShushi();

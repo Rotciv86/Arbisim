@@ -2,7 +2,6 @@ import { launchPuppeteer } from '../utils/puppeteerUtils.js';
 
 const scrapeUniSwap = async (browser) => {
   const page = await browser.newPage();
-  await page.setDefaultNavigationTimeout(300000);
 
   try {
     await page.goto('https://app.uniswap.org/swap');
