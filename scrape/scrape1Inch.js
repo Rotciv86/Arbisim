@@ -2,7 +2,6 @@ import puppeteer from 'puppeteer';
 
 const scrape1Inch = async (browser)  => {
   const page = await browser.newPage();
-  await page.setDefaultNavigationTimeout(60000);
 
   try {
 
