@@ -2,6 +2,7 @@ import { launchPuppeteer } from '../utils/puppeteerUtils.js';
 
 const scrapeSushi = async (browser)  => {
   const page = await browser.newPage();
+  await page.setDefaultNavigationTimeout(300000);
   
 
   try {

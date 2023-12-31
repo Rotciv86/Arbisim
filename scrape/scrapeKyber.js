@@ -3,6 +3,7 @@ import { launchPuppeteer } from "../utils/puppeteerUtils.js";
 
 const scrapeKyber = async (browser) => {
   const page = await browser.newPage();
+  await page.setDefaultNavigationTimeout(300000);
 
   try {
     let secondElement;
