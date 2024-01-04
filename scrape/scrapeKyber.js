@@ -30,12 +30,12 @@ const doSomethingElseAfterReload = async () => {
   console.log('Recargando la página...');
 };
 
-const scrapeKyber = async (browser) => {
-  const page = await browser.newPage();
+const scrapeKyber = async (page) => {
+  // const page = await browser.newPage();
 
   try {
     const operation = async (page) => {
-      await page.goto('https://kyberswap.com/swap/ethereum/eth-to-usdc', { timeout: 300000 });
+      // await page.goto('https://kyberswap.com/swap/ethereum/eth-to-usdc', { timeout: 300000 });
 
       // Espera a que la página esté completamente cargada
       await page.waitForSelector('body', { timeout: 300000 });
@@ -71,7 +71,7 @@ const scrapeKyber = async (browser) => {
     // Implementa acciones adicionales si es necesario
     return { buyPriceEthKyber: null };
   } finally {
-    await page.close();
+    // await page.close();
   }
 };
 

@@ -2,6 +2,8 @@ import { launchPuppeteer } from '../utils/puppeteerUtils.js';
 
 const wait = (timeout) => new Promise(resolve => setTimeout(resolve, timeout));
 
+let isFirstExecution = true;
+
 const tryScrapingOperation = async (page, operation, maxRetries = 3, retryInterval = 2000) => {
   let retries = 0;
   let result;
@@ -30,19 +32,22 @@ const doSomethingElseAfterReload = async () => {
   console.log('Recargando la página en SUSHISWAP...');
 };
 
-const scrapeSushi = async (browser)  => {
-  const page = await browser.newPage();
+const scrapeSushi = async (page) => {
+  // const page = await browser.newPage();
 
   try {
     const operation = async (page) => {
-      await page.goto('https://www.sushi.com/swap', {timeout: 300000});
+      // await page.goto('https://www.sushi.com/swap', { timeout: 300000 });
+    if (isFirstExecution) {
 
+      isFirstExecution = false;
+    
       await page.waitForSelector('input[testdata-id="swap-from-input"]', { timeout: 400000 });
       await page.type('input[testdata-id="swap-from-input"]', '1');
 
       await new Promise(resolve => setTimeout(resolve, 3000));
 
-      await page.waitForSelector('button[testdata-id="swap-to-button"]', { visible: true, timeout: 60000});
+      await page.waitForSelector('button[testdata-id="swap-to-button"]', { visible: true, timeout: 60000 });
 
       const buttonSelector = 'button[testdata-id="swap-to-button"]';
       const buttonsa = await page.$$(buttonSelector);
@@ -53,7 +58,7 @@ const scrapeSushi = async (browser)  => {
         console.log('SUSHI: No se encontraron suficientes botones con el testdata-id "swap-to-button".');
       }
 
-      await page.waitForSelector('input[placeholder="Search by token or address"]', { timeout: 60000});
+      await page.waitForSelector('input[placeholder="Search by token or address"]', { timeout: 60000 });
       await page.type('input[placeholder="Search by token or address"]', 'USDC');
 
       await new Promise(resolve => setTimeout(resolve, 3000));
@@ -85,7 +90,9 @@ const scrapeSushi = async (browser)  => {
       }
 
       await new Promise(resolve => setTimeout(resolve, 6000));
-
+      
+    }
+      // Obtener el valor del output directamente del atributo 'value'
       const outputValueText = await page.$eval('input[testdata-id="swap-to-input"]', (element) => element.value);
       const buyPriceEthSushi = parseFloat(outputValueText);
 
@@ -101,7 +108,7 @@ const scrapeSushi = async (browser)  => {
     console.error('SUSHI: Ocurrió un error:', error);
     return { buyPriceEthSushi: null };
   } finally {
-    await page.close();
+    // await page.close();
   }
 };
 
