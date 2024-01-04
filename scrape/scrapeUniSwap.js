@@ -1,11 +1,19 @@
 import { launchPuppeteer } from '../utils/puppeteerUtils.js';
 
-const scrapeUniSwap = async (browser) => {
-  const page = await browser.newPage();
-  await page.setDefaultNavigationTimeout(300000);
+let isFirstExecution = true;
 
+const scrapeUniSwap = async (page) => {
+
+  
+  
+  await page.setDefaultNavigationTimeout(300000);
+  
   try {
-    await page.goto('https://app.uniswap.org/swap'), {timeout: 300000};
+    // await page.goto('https://app.uniswap.org/swap'), {timeout: 300000};
+    if (isFirstExecution) {
+  
+      isFirstExecution = false;
+      
     await page.waitForSelector('input#swap-currency-input', { timeout: 300000 });
     const inputValue = await page.$('input#swap-currency-input');
     await page.type('input#swap-currency-input', '1');
@@ -84,6 +92,7 @@ const scrapeUniSwap = async (browser) => {
     
     await new Promise(resolve => setTimeout(resolve, 3000));
 
+  }
     // Obtener el valor del output como texto usando la clase específica
     const outputValueText = await page.$eval('input#swap-currency-output', (element) => element.value);
     
@@ -102,7 +111,7 @@ const scrapeUniSwap = async (browser) => {
     console.error('UNI: Ocurrió un error:', error);
     return { buyPriceEthUni: null }; // Return null if an error occurs
   } finally {
-    await page.close();
+    // await page.close();
   }
 };
 

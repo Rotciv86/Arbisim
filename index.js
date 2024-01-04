@@ -23,9 +23,30 @@ app.listen( port , () => {
   console.log(`La aplicación está escuchando en el puerto ${port}`);
 });
 
+let browser;
+
+let pageKyber;
+let pageUni;
+let pageSushi;
+
+
+( async() => { 
+
+browser = await launchPuppeteer();
+
+pageKyber = await browser.newPage();
+pageUni = await browser.newPage();
+pageSushi = await browser.newPage();
+
+await pageKyber.goto('https://kyberswap.com/swap/ethereum/eth-to-usdc', { timeout: 300000 });
+await pageUni.goto('https://app.uniswap.org/swap'), {timeout: 300000};
+await pageSushi.goto('https://www.sushi.com/swap', { timeout: 300000 });
+
+}
+)();
+
 
 let isProcessing = false;
-let browser;
 
 setInterval( async () => {
 
@@ -61,13 +82,12 @@ setInterval( async () => {
   const lastRow = values[values.length - 1]; // Última fila de datos
   console.log(lastRow)
 
-  const browser = await launchPuppeteer();
 
 
     const [scrapedDataSushiSwap, scrapedDataUniSwap, scrapedDataKyberSwap] = await Promise.all([
-      scrapeSushi(browser),
-      scrapeUniSwap(browser),
-      scrapeKyber(browser)
+      scrapeSushi(pageSushi),
+      scrapeUniSwap(pageUni),
+      scrapeKyber(pageKyber)
     ]);
 
     const { buyPriceEthSushi } = scrapedDataSushiSwap;
@@ -86,7 +106,7 @@ setInterval( async () => {
     const minPrice = Math.min(...updatedRow.slice(1));
 
     // Verifica si la diferencia entre el máximo y el mínimo es al menos 10
-    const isDifferenceGreaterThan10 = maxPrice - minPrice >= 20;
+    const isDifferenceGreaterThan10 = maxPrice - minPrice >= 10;
     const isMinPriceRight = minPrice > 0;
 
     if(isDifferenceGreaterThan10 && isMinPriceRight){
@@ -117,9 +137,9 @@ setInterval( async () => {
 } finally {
 
   isProcessing = false;
-  if(browser){
-  await browser.close();
-  }
+  // if(browser){
+  // await browser.close();
+  // }
 }
 
 }, 300000);
