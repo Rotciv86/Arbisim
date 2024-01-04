@@ -13,7 +13,7 @@ const tryScrapingOperation = async (page, operation, maxRetries = 3, retryInterv
       result = await operation(page);
       break; // Si tiene éxito, salimos del bucle
     } catch (error) {
-      console.error(`Error: ${error.message}. Intento ${retries + 1} de ${maxRetries}`);
+      console.error(`Error SUSHI: ${error.message}. Intento ${retries + 1} de ${maxRetries}`);
       retries++;
       await wait(retryInterval);
     }
@@ -72,6 +72,8 @@ const scrapeSushi = async (page) => {
         console.log('SUSHI: No se encontró ningún elemento con el título "USDC".');
       }
 
+    }
+
       await new Promise(resolve => setTimeout(resolve, 1000));
 
       const buttons = await page.$$('button');
@@ -89,9 +91,9 @@ const scrapeSushi = async (page) => {
         await entendidoButton.click();
       }
 
+    
       await new Promise(resolve => setTimeout(resolve, 6000));
       
-    }
       // Obtener el valor del output directamente del atributo 'value'
       const outputValueText = await page.$eval('input[testdata-id="swap-to-input"]', (element) => element.value);
       const buyPriceEthSushi = parseFloat(outputValueText);

@@ -11,7 +11,7 @@ const tryScrapingOperation = async (page, operation, maxRetries = 3, retryInterv
       result = await operation(page);
       break; // Si tiene éxito, salimos del bucle
     } catch (error) {
-      console.error(`Error: ${error.message}. Intento ${retries + 1} de ${maxRetries}`);
+      console.error(`Error KYBERSWAP: ${error.message}. Intento ${retries + 1} de ${maxRetries}`);
       retries++;
       await wait(retryInterval);
     }
@@ -22,7 +22,7 @@ const tryScrapingOperation = async (page, operation, maxRetries = 3, retryInterv
 
 const doSomethingElseAfterSuccess = async (result) => {
   // Implementa acciones adicionales después de que la operación sea exitosa
-  console.log('Operación exitosa. Resultado:', result);
+  console.log('Operación exitosa en KYBERSWAP. Resultado:', result);
 };
 
 const doSomethingElseAfterReload = async () => {
@@ -38,7 +38,7 @@ const scrapeKyber = async (page) => {
       // await page.goto('https://kyberswap.com/swap/ethereum/eth-to-usdc', { timeout: 300000 });
 
       // Espera a que la página esté completamente cargada
-      await page.waitForSelector('body', { timeout: 300000 });
+      // await page.waitForSelector('body', { timeout: 300000 });
 
       // Espera adicional (ajusta según sea necesario)
       await wait(2000);
