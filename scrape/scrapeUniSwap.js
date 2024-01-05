@@ -18,6 +18,7 @@ const scrapeUniSwap = async (page) => {
     const inputValue = await page.$('input#swap-currency-input');
     await page.type('input#swap-currency-input', '1');
 
+    
     // console.log('HTML del elemento específico:', inputValueHTML);
     
     // Click the currency select button
@@ -65,7 +66,7 @@ const scrapeUniSwap = async (page) => {
 
     for (const button of buttons) {
       const buttonText = await page.evaluate(el => el.innerText, button);
-      if (buttonText.includes('Entiendo')|| buttonText.includes('I understand')) {
+      if (buttonText.includes('Entiendo')|| buttonText.includes('I understand')|| buttonText.includes('Entendido')) {
         entendidoButton = button;
         break;  // Rompemos el bucle si encontramos el botón con la palabra "Entiendo"
       }
@@ -78,21 +79,21 @@ const scrapeUniSwap = async (page) => {
       // console.log('No se encontró un botón que contenga "Entiendo".');
     }
 
-
     const elementHTML = await page.evaluate(el => el.outerHTML, specificElement[0]);
     // console.log('HTML del elemento específico:', elementHTML);
-
-
+    
+    
     const htmlOfSpecificElement = await page.evaluate(element => element.outerHTML, specificElement[0]);
     // console.log('HTML del elemento específico:', htmlOfSpecificElement);
-
+    
     // Esperar 10 segundos para comprobar el valor de output
+  }
   
 
     
-    await new Promise(resolve => setTimeout(resolve, 3000));
+    await new Promise(resolve => setTimeout(resolve, 6000));
 
-  }
+  
     // Obtener el valor del output como texto usando la clase específica
     const outputValueText = await page.$eval('input#swap-currency-output', (element) => element.value);
     
